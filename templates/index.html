@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>背诵助手 · 中考必背古诗词</title>
+<link rel="stylesheet" href="static/css/style.css?v=20261017a">
+</head>
+<body>
+
+<!-- ========== 设置口令遮罩（老师页要口令；与「作文批改」同一套样式与语义） ========== -->
+<div class="login-overlay hidden" id="setPwOverlay">
+  <div class="login-box">
+    <div class="login-icon">🔒</div>
+    <h2 class="login-title">需要管理口令</h2>
+    <p class="login-sub">输入口令后可以看全班的背诵情况</p>
+    <input class="input login-input" id="setPwInput" type="password" placeholder="管理口令"
+           autocomplete="current-password">
+    <div class="login-error hidden" id="setPwErr">口令不正确，重试</div>
+    <button class="btn primary wide" id="btnSetPwOk">解锁</button>
+    <button class="btn ghost wide" id="btnSetPwCancel" style="margin-top:8px">取消</button>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">📖 背诵助手</div>
+  <div class="top-actions">
+    <button class="btn ghost icon" id="btnDeck" title="题库">📚</button>
+    <button class="btn ghost icon" id="btnTeacher" title="班级">👩‍🏫</button>
+  </div>
+</header>
+
+<main id="app">
+  <!-- ========== 练习 ========== -->
+  <section class="view hidden" id="view-practice">
+    <div class="qbar">
+      <span id="qProgress">第 1 / 1 题</span>
+      <span class="grow" id="qPoem"></span>
+      <span class="tag" id="qMode">选择题</span>
+    </div>
+
+    <div class="card qcard">
+      <div class="qtext" id="qText">…</div>
+      <div class="qhint" id="qHint"></div>
+      <div class="choices hidden" id="choiceBox"></div>
+      <div class="hidden" id="fillBox">
+        <input class="input fill-input" id="fillInput" placeholder="默写填空（标点不用管）"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <div class="row mt">
+          <button class="btn primary" id="btnSubmit">提交</button>
+          <button class="btn ghost" id="btnHint">提示</button>
+          <button class="btn ghost" id="btnGiveUp">看答案</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card hidden" id="fbCard">
+      <div class="fb-title" id="fbTitle">对！</div>
+      <div class="muted small" id="fbNote"></div>
+      <div class="mt"><span class="lbl">正确答案</span><div class="ans" id="fbAnswer"></div></div>
+      <div class="mt hidden" id="fbYoursWrap"><span class="lbl">你写的</span><div class="ans" id="fbYours"></div></div>
+      <button class="btn primary wide mt" id="btnNext">下一题 →</button>
+    </div>
+
+    <div class="card hidden" id="doneCard">
+      <div class="center" style="font-size:40px">🎉</div>
+      <div id="doneText"></div>
+      <button class="btn primary wide mt" id="btnAgain">再来一轮</button>
+      <button class="btn ghost wide mt" id="btnOnlyWrong">只练错过的</button>
+      <button class="btn ghost wide mt" id="btnMyProgress">看看我的进度</button>
+    </div>
+
+    <div class="card hidden" id="progCard">
+      <div class="card-head"><span class="lbl">📈 我的进度</span>
+        <button class="btn ghost tiny" id="btnCloseProg">收起</button></div>
+      <div id="progBody"></div>
+    </div>
+  </section>
+
+  <!-- ========== 题库（校对用） ========== -->
+  <section class="view hidden" id="view-deck">
+    <div class="card">
+      <div class="card-head">
+        <span class="lbl">📚 题库（共 <span id="deckCount">0</span> 篇）</span>
+        <button class="btn ghost tiny" id="btnBackFromDeck">‹ 返回</button>
+      </div>
+      <div class="muted small">点篇目展开原文，方便逐字校对；改内容直接改 <code>data/deck.json</code>。</div>
+      <div class="deck-list mt" id="deckList"></div>
+    </div>
+  </section>
+
+  <!-- ========== 班级（老师看，口令门） ========== -->
+  <section class="view hidden" id="view-teacher">
+    <div class="detail-head">
+      <button class="btn ghost" id="btnBackFromTeacher">‹ 返回</button>
+      <button class="btn ghost" id="btnClassRefresh">🔄 刷新</button>
+    </div>
+    <div id="classBody"><div class="card muted">正在读取…</div></div>
+  </section>
+</main>
+
+<div class="toast hidden" id="toast"></div>
+<script src="static/js/app.js?v=20261017a"></script>
+</body>
+</html>
